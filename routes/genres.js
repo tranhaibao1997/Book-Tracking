@@ -1,17 +1,16 @@
 var express = require('express');
 var router = express.Router();
-let createAuthor = require('../controller/authorController')
-let Author = require('../models/author')
+let Genres = require('../models/genres')
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
     try {
-        let allAuthor = await Author.find();
+        let allGenres = await Genres.find();
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Genresization");
         res.status(201).send({
-            data: allAuthor,
+            data: allGenres,
             message: "success"
         })
     } catch (err) {
@@ -21,17 +20,19 @@ router.get('/', async function(req, res, next) {
     }
 });
 
-//create Author
-router.post('/createAuthor', async(req, res) => {
+//create Genres
+router.post('/createGenres', async(req, res) => {
+    console.log("zô rồi")
+    console.log(req.body)
     try {
-        // const author = await Author.create({ name: req.body.name })
-        const author = new Author({ name: req.body.name })
-        await author.save();
+        // const Genres = await Genres.create({ name: req.body.name })
+        const genres = new Genres({ "name": req.body.name })
+        await genres.save();
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Genresization");
         res.status(201).json({
-            data: { author },
+            data: { genres },
             status: "success"
         })
 
@@ -44,16 +45,16 @@ router.post('/createAuthor', async(req, res) => {
 })
 
 
-//update Author
+//update Genres
 router.patch('/:id', async(req, res) => {
     try {
-        // const author = await Author.create({ name: req.body.name })
-        const author = await Author.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true })
+        // const Genres = await Genres.create({ name: req.body.name })
+        const Genres = await Genres.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true })
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Genresization");
         res.status(201).json({
-            data: { author },
+            data: { Genres },
             status: "success"
         })
 
@@ -66,16 +67,16 @@ router.patch('/:id', async(req, res) => {
 })
 
 
-//delete Author
+//delete Genres
 router.delete('/:id', async(req, res) => {
     try {
-        // const author = await Author.create({ name: req.body.name })
-        const author = await Author.findByIdAndDelete(req.params.id)
+        // const Genres = await Genres.create({ name: req.body.name })
+        const Genres = await Genres.findByIdAndDelete(req.params.id)
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Genresization");
         res.status(201).json({
-            data: { author },
+            data: { Genres },
             status: "success"
         })
 
