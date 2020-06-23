@@ -5,40 +5,14 @@ import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Author from './Author'
 import Genres from './Genres'
+import Book from './Book';
 
 function App() {
 
 
-  React.useEffect(() => {
-    getAuthor()
-    return () => {
 
-    }
-  }, [])
+  
 
-  async function getAuthor() {
-    try {
-      let res = await axios.get("http://localhost:5000/author")
-      // let data = await res.data()
-      console.log(res)
-    }
-    catch (err) {
-      console.log(err)
-    }
-
-  }
-
-  async function getGenres() {
-    try {
-      let res = await axios.get("http://localhost:5000/author")
-      // let data = await res.data()
-      console.log(res)
-    }
-    catch (err) {
-      console.log(err)
-    }
-
-  }
 
   async function getBook() {
     try {
@@ -57,6 +31,7 @@ function App() {
       <div className="App">
         <Author></Author>
         <Genres></Genres>
+        <Book></Book>
       </div>
     </>
   );

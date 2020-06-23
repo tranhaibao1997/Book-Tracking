@@ -3,9 +3,21 @@ var router = express.Router();
 var Book = require("../models/book")
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Express' });
-    res.send("OK")
+router.get('/', async function (req, res, next) {
+    try {
+        let allBook = await Book.find();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.status(201).send({
+            data: allBook,
+            message: "success"
+        })
+    } catch (err) {
+        res.status(401).send({
+            message: "fail"
+        })
+    }
 });
 
 router.post("/createBook", async function (req, res, next) {
