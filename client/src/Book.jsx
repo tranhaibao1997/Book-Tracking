@@ -4,12 +4,36 @@ import axios from 'axios'
 
 function Book(props) {
     React.useEffect(() => {
-        getBook()
+        getBook();
+        getAuthor();
+        getGenres()
         return () => {
 
         }
     }, [])
 
+    async function getAuthor() {
+        try {
+            let res = await axios.get("http://localhost:5000/author")
+            // let data = await res.data()
+            setAuthorList(res.data.data)
+        }
+        catch (err) {
+            console.log(err)
+        }
+
+    }
+    async function getGenres() {
+        try {
+            let res = await axios.get("http://localhost:5000/genres")
+            // let data = await res.data()
+            setGenresList(res.data.data)
+        }
+        catch (err) {
+            console.log(err)
+        }
+
+    }
     async function getBook() {
         try {
             let res = await axios.get("http://localhost:5000/book")
@@ -19,8 +43,8 @@ function Book(props) {
         catch (err) {
             console.log(err)
         }
-    
-      }
+
+    }
     async function deleteBook(id) {
         try {
             let res = await axios.delete(`http://localhost:5000/book/${id}`)
@@ -35,6 +59,8 @@ function Book(props) {
 
     let [authorName, setAuthorName] = React.useState("")
     let [bookList, setBookList] = React.useState(null)
+    let [authorList, setAuthorList] = React.useState(null)
+    let [genresList, setGenresList] = React.useState(null)
     async function createNewAuthor(e) {
         e.preventDefault()
         try {
@@ -58,6 +84,7 @@ function Book(props) {
         }
     }
 
+    console.log(authorList)
 
 
     return (
@@ -79,6 +106,43 @@ function Book(props) {
                                     <FormControl onChange={e => setAuthorName(e.target.value)} id="inlineFormInputGroup" placeholder="Username" />
                                 </InputGroup>
                             </Col>
+
+
+                            <Form.Control
+                                as="select"
+                                className="mr-sm-2"
+                                id="inlineFormCustomSelect"
+                                custom
+                            >
+
+
+                                <option selected>Choose...</option>
+                                {
+                                    authorList ? authorList.map(author => {
+                                        return (
+                                            <option value="1">{author.name}</option>
+                                        )
+                                    })
+                                        : ""
+                                }
+                            </Form.Control>
+                          
+                            {
+                              genresList ?genresList.map(genres=>{
+                                    return(
+                                        <Form.Check
+                                        type="checkbox"
+                                        id="customControlAutosizing"
+                                        label={genres.name}
+                                    
+                                    />
+                                    )
+                                
+                                    
+                                })
+                                :""
+                            }
+
 
                             <Col xs="auto">
                                 <Button type="submit" className="mb-2">

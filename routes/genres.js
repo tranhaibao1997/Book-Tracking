@@ -49,12 +49,12 @@ router.post('/createGenres', async(req, res) => {
 router.patch('/:id', async(req, res) => {
     try {
         // const Genres = await Genres.create({ name: req.body.name })
-        const Genres = await Genres.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true })
+        const result = await Genres.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true })
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Genresization");
         res.status(201).json({
-            data: { Genres },
+            data: { result },
             status: "success"
         })
 
@@ -71,12 +71,13 @@ router.patch('/:id', async(req, res) => {
 router.delete('/:id', async(req, res) => {
     try {
         // const Genres = await Genres.create({ name: req.body.name })
-        const Genres = await Genres.findByIdAndDelete(req.params.id)
+        console.log(req.params.id)
+        const genres = await Genres.findByIdAndDelete(req.params.id)
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Genresization");
         res.status(201).json({
-            data: { Genres },
+            data: { genres },
             status: "success"
         })
 
